@@ -25,15 +25,7 @@ public static class ServiceCollectionExtensions
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             options.AddInterceptors(serviceProvider.GetRequiredService<ISaveChangesInterceptor>());
         });
-
-        // Register Identity
-        services.AddIdentityApiEndpoints<ApplicationUser>((options) =>
-            {
-                options.SignIn.RequireConfirmedAccount = true;
-            })
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-
+        
         services.AddScoped<ApplicationDbContextInitializer>();
     }
 }

@@ -23,7 +23,7 @@ function IssuePage() {
     <div>
       <NavLink to={paths.issues.index.getHref()}>return</NavLink>
       <p>{issueQuery.data.title}</p>
-      <p>{issueQuery.data.body}</p>
+      <p>{issueQuery.data.description}</p>
     </div>
   );
 }

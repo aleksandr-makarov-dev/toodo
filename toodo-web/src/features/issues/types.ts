@@ -1,11 +1,10 @@
 export type Issue = {
-  id: number;
-  userId: number;
+  id: string;
   title: string;
-  body: string;
+  description: string;
 };
 
 export type CreateIssue = {
   title: string;
-  body: string;
+  description: string;
 };

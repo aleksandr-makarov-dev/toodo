@@ -12,7 +12,7 @@ function IssuesPage() {
   const handleCreateIssue = () => {
     createIssue({
       title: 'New test isssue',
-      body: 'New test issue body description',
+      description: 'New test issue body description',
     });
   };
 
@@ -21,16 +21,23 @@ function IssuesPage() {
   if (issuesQuery.isError)
     return (
       <div>
-        <p>Could not fetch issues</p>
-        <button onClick={() => issuesQuery.refetch()}>refetch</button>
+        <p>{issuesQuery.error.toString()}</p>
+        <button onClick={() => issuesQuery.refetch()}>
+          {issuesQuery.isFetching ? 'refetching...' : 'refetch'}
+        </button>
       </div>
     );
 
   return (
     <div>
-      <button onClick={handleCreateIssue}>
-        {issueMutation.isLoading ? 'Creating...' : 'Create issue'}
-      </button>
+      <div>
+        <button onClick={handleCreateIssue}>
+          {issueMutation.isLoading ? 'Creating...' : 'Create issue'}
+        </button>
+        <button onClick={() => issuesQuery.refetch()}>
+          {issuesQuery.isFetching ? 'refetching...' : 'refetch'}
+        </button>
+      </div>
       <ul>
         {issuesQuery.data?.map((item) => (
           <li key={item.id}>
@@ -39,9 +46,8 @@ function IssuesPage() {
               <NavLink to={paths.issues.id.getHref(item.id.toString())}>
                 {item.title}
               </NavLink>{' '}
-              <span>[{item.userId}]</span>
             </p>
-            <p>{item.body}</p>
+            <p>{item.description}</p>
           </li>
         ))}
       </ul>

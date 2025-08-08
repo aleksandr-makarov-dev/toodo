@@ -1,6 +1,4 @@
-using Microsoft.OpenApi.Models;
 using Toodo.API.Extensions;
-using Toodo.API.Infrastructure;
 using Toodo.Application.Extensions;
 using Toodo.Infrastructure.Data;
 using Toodo.Infrastructure.Extensions;
@@ -24,7 +22,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    await app.InitialiseDatabaseAsync();
+    using var scope = app.Services.CreateScope();
+
+    var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
+
+    await initializer.InitializeAsync();
+    await initializer.SeedAsync();
 
     app.UseSwagger();
     app.UseSwaggerUI();

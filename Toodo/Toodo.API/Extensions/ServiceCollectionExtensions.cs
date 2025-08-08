@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.OpenApi.Models;
 using Toodo.API.Infrastructure;
 using Toodo.API.Services;
 using Toodo.Application.Common.Security;
+using Toodo.Infrastructure.Data;
+using Toodo.Infrastructure.Identity;
 
 namespace Toodo.API.Extensions;
 
@@ -43,5 +47,17 @@ public static class ServiceCollectionExtensions
         services.AddExceptionHandler<ExceptionHandler>();
 
         services.AddScoped<IUserContext, UserContext>();
+
+        // Register IEmailSender
+        services.AddTransient<IEmailSender, EmailSender>();
+        services.AddTransient<IEmailSender<ApplicationUser>, EmailSender>();
+
+        // Register Identity
+        services.AddIdentityApiEndpoints<ApplicationUser>((options) =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
     }
 }

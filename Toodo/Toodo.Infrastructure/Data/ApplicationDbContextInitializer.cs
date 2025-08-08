@@ -1,25 +1,10 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Toodo.Domain.Constants;
 using Toodo.Domain.Entities;
 using Toodo.Infrastructure.Identity;
 
 namespace Toodo.Infrastructure.Data;
-
-public static class ApplicationDbContextInitializerExtensions
-{
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-
-        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
-
-        await initializer.InitializeAsync();
-        await initializer.SeedAsync();
-    }
-}
 
 public class ApplicationDbContextInitializer(
     ILogger<ApplicationDbContextInitializer> logger,

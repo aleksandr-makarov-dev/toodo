@@ -4,20 +4,20 @@ import type { CreateIssue, Issue } from './types';
 export const issuesApi = createApi({
   reducerPath: 'issues-api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://jsonplaceholder.typicode.com',
+    baseUrl: 'http://localhost:5000',
   }),
-  tagTypes: ['posts'],
+  tagTypes: ['issues'],
   endpoints: (builder) => ({
     getIssues: builder.query<Issue[], void>({
-      query: () => '/posts',
-      providesTags: ['posts'],
+      query: () => '/issues',
+      providesTags: ['issues'],
     }),
     getIssue: builder.query<Issue, { id: string }>({
-      query: ({ id }) => `/posts/${id}`,
+      query: ({ id }) => `/issues/${id}`,
     }),
     createIssue: builder.mutation<Issue, CreateIssue>({
-      query: (data) => ({ url: '/posts', method: 'POST', body: data }),
-      invalidatesTags: ['posts'],
+      query: (data) => ({ url: '/issues', method: 'POST', body: data }),
+      invalidatesTags: ['issues'],
     }),
   }),
 });

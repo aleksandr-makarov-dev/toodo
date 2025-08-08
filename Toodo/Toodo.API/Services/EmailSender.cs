@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Logging;
 using Toodo.Infrastructure.Identity;
 
-namespace Toodo.Application.Emails;
+namespace Toodo.API.Services;
 
-internal sealed class EmailSender(ILogger<EmailSender> logger) : IEmailSender, IEmailSender<ApplicationUser>
+internal sealed class EmailSender(ILogger<EmailSender> logger) : IEmailSender<ApplicationUser>, IEmailSender
 {
     private readonly ILogger _logger = logger;
 
